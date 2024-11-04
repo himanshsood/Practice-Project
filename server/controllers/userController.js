@@ -6,11 +6,9 @@ require("dotenv").config();
 // Register User Function
 const registerUser = asyncHandler(async (req, res) => {
 
-    
+    const { email, firstname, lastname, age, bloodgroup, gender, phonenumber,password } = req.body;
 
-    const { email, firstname, lastname, gender, age, bloodgroup, password, phoneNumber } = req.body;
-
-    if (!firstname || !lastname || !age || !bloodgroup || !gender || !email || !password || !phoneNumber) {
+    if (!firstname || !lastname || !age || !bloodgroup || !gender || !email || !password || !phonenumber) {
         res.status(400);
         throw new Error("Please provide all fields");
     }
@@ -32,12 +30,27 @@ const registerUser = asyncHandler(async (req, res) => {
         age,
         bloodgroup,
         gender,
-        phoneNumber,
+        phonenumber,
         password: hashedPassword,
     });
 
     res.status(201).json({ message: "User registered successfully", user });
 });
+
+const loginUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    const foundUser = await User.findOne({ email }); // Correct way to find user
+
+    if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+        // Passwords match
+        res.status(200).json({ message: "Successful login", user: foundUser });
+    } else {
+        // Invalid credentials
+        res.status(401).json({ message: "Invalid email or password" });
+    }
+});
+
 
 // Export the functions
 exports.registerUser = registerUser;
