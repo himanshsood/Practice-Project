@@ -11,7 +11,7 @@ dotenv.config();
 
 
 
-// connectDb()
+connectDb()
 
 
 const app = express()
@@ -24,7 +24,8 @@ hbs.registerPartials(__dirname + '/views/partials'); // Path to your partials
 app.use(express.json())
 app.use(cors())
 
-app.use("/api/register",require("./routes/userRoutes"))
+app.use("/api/user",require("./routes/userRoutes"))
+app.use("/api/doctors", require("./routes/docRoutes"));
 
 
 app.set("view engine", "hbs");

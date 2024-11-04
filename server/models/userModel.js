@@ -35,9 +35,6 @@ const userSchema=mongoose.Schema(
             type:String,
             require:[true,"please add your password"]
         }
-    
-
-
     },
     {
         timestamps:true,

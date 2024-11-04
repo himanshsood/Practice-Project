@@ -5,6 +5,9 @@ require("dotenv").config();
 
 // Register User Function
 const registerUser = asyncHandler(async (req, res) => {
+
+    
+
     const { email, firstname, lastname, gender, age, bloodgroup, password, phoneNumber } = req.body;
 
     if (!firstname || !lastname || !age || !bloodgroup || !gender || !email || !password || !phoneNumber) {
