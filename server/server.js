@@ -7,9 +7,12 @@ const cors = require("cors")
 const multer=require("multer")
 // const upload = multer({ dest: 'uploads/' })
 
+const fileSchemaModel=require("./models/filestoremodel")
+
 
 //env file config
-const dotenv=require("dotenv")
+const dotenv=require("dotenv");
+
 dotenv.config();
 
 
@@ -56,18 +59,38 @@ const storage=multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
+// app.post('/profile', upload.single('avatar'), function (req, res, next) {
+//     // req.file is the `avatar` file
+//     // req.body will hold the text fields, if there were any
 
-    console.log(req.body)
-    console.log(req.file)
+//     console.log(req.body)
+//     console.log(req.file)
     
 
-    return res.redirect("/home")
+//     return res.redirect("/home")
 
+// })
 
-  })
+app.post('/profile',upload.single('avatar'),async function(req,res,next){
+
+    const {name}=req.body;
+    const {filename , path}=req.file
+
+    const newFile=new fileSchemaModel ({
+        name,
+        avatar:{
+            filename ,
+            path
+        }
+    })
+
+    await newFile.save()
+
+    console.log("Profile Saved")
+
+    res.redirect("/home")
+
+})
 
 
 
