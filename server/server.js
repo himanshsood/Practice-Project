@@ -4,6 +4,9 @@ const mongoose=require("mongoose")
 const errorHandler = require("./middleware/errorHandler")
 const hbs = require("hbs");
 const cors = require("cors")
+const multer=require("multer")
+// const upload = multer({ dest: 'uploads/' })
+
 
 //env file config
 const dotenv=require("dotenv")
@@ -40,6 +43,35 @@ app.get("/home",(req,res)=>{
 
     })
 })
+
+const storage=multer.diskStorage({
+    destination:function(req,res,cb){
+        cb(null,'./uploads')
+    },
+    filename:function(req,file,cb){
+        const  uniqueSuffix=Date.now()
+        cb(null,file.fieldname+'-'+uniqueSuffix)
+    }
+})
+
+const upload = multer({ storage: storage })
+
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+
+    console.log(req.body)
+    console.log(req.file)
+    
+
+    return res.redirect("/home")
+
+
+  })
+
+
+
+
 
 
 app.get("/allusers",(req,res)=>{

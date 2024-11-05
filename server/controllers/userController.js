@@ -55,6 +55,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // Export the functions
 exports.registerUser = registerUser;
 
+
 exports.loginUser = asyncHandler(async (req, res) => {
     // Implement login logic here
     res.send("User logged in successfully");
