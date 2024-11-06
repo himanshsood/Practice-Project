@@ -10,6 +10,7 @@ const multer=require("multer")
 const fileSchemaModel=require("./models/filestoremodel")
 
 
+
 //env file config
 const dotenv=require("dotenv");
 
@@ -32,6 +33,7 @@ app.use(cors())
 
 app.use("/api/user",require("./routes/userRoutes"))
 app.use("/api/doctors", require("./routes/docRoutes"));
+app.use("/uploads", express.static("uploads"));
 
 
 app.set("view engine", "hbs");
@@ -40,11 +42,10 @@ app.use(errorHandler)
 
 
 
-app.get("/home",(req,res)=>{
+app.get("/home",async (req,res)=>{
 
-    res.render("home",{ //"home" will fetch the file named "home.hbs" from views folder
-
-    })
+    const filepics = await fileSchemaModel.find();
+    res.render("home", { filepics });
 })
 
 const storage=multer.diskStorage({
@@ -68,7 +69,6 @@ const upload = multer({ storage: storage })
     
 
 //     return res.redirect("/home")
-
 // })
 
 app.post('/profile',upload.single('avatar'),async function(req,res,next){
@@ -91,6 +91,17 @@ app.post('/profile',upload.single('avatar'),async function(req,res,next){
     res.redirect("/home")
 
 })
+app.get("/getPhotos", async (req, res) => {
+    try {
+        // Assuming Upload is a model for your database
+        const uploads = await fileSchemaModel.find(); // Fetch all uploaded photos from the database
+        res.render("users", { uploads }); // Pass the photos to the template
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching photos");
+    }
+});
 
 
 

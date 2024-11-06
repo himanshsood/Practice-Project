@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +8,32 @@
     <title>Document</title>
 </head>
 <body>
-    <ul class="people_list">
-        {{#each people}}
-            {{username}} {{age}}
+
+  {{!-- {{#each users}}
+    <li> {{username}} : {{hosts}} </li>
+  {{/each}} --}}
+
+  <ul>
+      {{#each uploads}}
+          <li>
+              {{!-- <img src="{{uploads.avatar.filePath}}" alt="User Photo" width="200" height="200" /> --}}
+              <h2>{{avatar.filePath}}</h2>
+              <img src="{{avatar.filePath}}" alt="">
+          </li>
+      {{/each}}
+  </ul>
+
+    {{!-- <ul>
+        {{#each uploads as |b|}}
+            <li>
+                <h2>{{b.avatar.filePath}}</h2>
+                <img src="{{b.avatar.filePath}}" alt="">
+
+            </li>
         {{/each}}
-    </ul>
+    </ul> --}}
+
+
+
 </body>
 </html>
