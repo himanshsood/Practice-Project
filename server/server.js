@@ -93,14 +93,13 @@ app.post('/profile',upload.single('avatar'),async function(req,res,next){
 })
 app.get("/getPhotos", async (req, res) => {
     try {
-        // Assuming Upload is a model for your database
         const uploads = await fileSchemaModel.find(); // Fetch all uploaded photos from the database
-        res.render("users", { uploads }); // Pass the photos to the template
+        res.render("home", { uploads }); // Pass the photos to the template
 
     } catch (error) {
         console.error(error);
         res.status(500).send("Error fetching photos");
-    }
+    }
 });
 
 
