@@ -6,7 +6,7 @@ const hbs = require("hbs");
 const cors = require("cors")
 const multer=require("multer")
 // const upload = multer({ dest: 'uploads/' })
-
+const jwt=require("jsonwebtoken")
 const fileSchemaModel=require("./models/filestoremodel")
 
 
@@ -15,8 +15,6 @@ const fileSchemaModel=require("./models/filestoremodel")
 const dotenv=require("dotenv");
 
 dotenv.config();
-
-
 
 connectDb()
 
