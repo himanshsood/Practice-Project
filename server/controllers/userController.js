@@ -42,16 +42,24 @@ const loginUser = asyncHandler(async (req, res) => {
     const foundUser = await User.findOne({ email });
 
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
-        const token = jwt.sign({ id: foundUser.id }, 'yourSecretKey', { expiresIn: '1h' });
+        const token = jwt.sign({ id: foundUser.id }, process.env.PRIVATE_KEY);
         res.json({ token });
     } else {
         res.status(401).json({ message: "Invalid email or password" });
     }
+
+    
 });
 
 const userProfile=asyncHandler(async(req,res)=>{
-    res.send("Successfullty logged in") 
+    const {email}=req.body
+
+    const user=await User.findOne({email})
+    // console.log(user.age)
+    res.send({user})
 })
+
+
 
 // Export the functions
 exports.registerUser = registerUser;
