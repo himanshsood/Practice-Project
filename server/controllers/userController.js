@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const { generateToken } = require("../middleware/jwtMiddlewares");
 
 // Register User Function
 const registerUser = asyncHandler(async (req, res) => {
@@ -42,19 +43,20 @@ const loginUser = asyncHandler(async (req, res) => {
     const foundUser = await User.findOne({ email });
 
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
-        const token = jwt.sign({ id: foundUser.id }, process.env.PRIVATE_KEY);
+        // Generate a token with the user's ID
+        const token = generateToken({ id: foundUser.id });
         res.json({ token });
     } else {
         res.status(401).json({ message: "Invalid email or password" });
     }
-
-    
 });
 
 const userProfile=asyncHandler(async(req,res)=>{
-    const {email}=req.body
+    // const {email}=req.body
 
-    const user=await User.findOne({email})
+    const id=req.user.id
+
+    const user=await User.findById(id)
     // console.log(user.age)
     res.send({user})
 })
