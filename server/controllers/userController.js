@@ -62,8 +62,27 @@ const userProfile=asyncHandler(async(req,res)=>{
 })
 
 
+const updateUser=asyncHandler(async(req,res)=>{
+    const {firstname, email, age, phonenumber}=req.body
+
+    const user=User.findOne({email})
+
+    const updatedUser=await User.findOneAndUpdate(
+        {email}, //filter by email
+        {firstname,age,phonenumber},
+        {new:true}
+
+    );
+
+    res.json({user:updateUser})
+    console.log("user has been updated successfully")
+})
+
+
+
 
 // Export the functions
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.userProfile=userProfile;
+exports.updateUser=updateUser;

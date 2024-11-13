@@ -6,7 +6,8 @@ const validateToken = require("../middleware/jwtMiddlewares").validateToken;
 const {
     registerUser,
     loginUser,
-    userProfile
+    userProfile,
+    updateUser
 } = require("../controllers/userController");
 const { generateToken } = require("../middleware/jwtMiddlewares");
 
@@ -16,6 +17,7 @@ router.post("/login" ,loginUser);
 
 // Protect /profile route with validateToken middleware
 router.get("/profile", validateToken,userProfile);
+router.put("/updateuserprofile",updateUser);
 
 
 module.exports = router;
