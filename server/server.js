@@ -32,7 +32,7 @@ app.use(cors())
 app.use("/api/user",require("./routes/userRoutes"))
 app.use("/api/doctors", require("./routes/docRoutes"));
 app.use("/uploads", express.static("uploads"));
-
+app.use("/api/newsletter",require("./routes/newsletterRoutes"))
 
 app.set("view engine", "hbs");
 
