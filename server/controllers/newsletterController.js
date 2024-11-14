@@ -15,6 +15,18 @@ const getNewsletter=asyncHandler(async(req,res)=>{
 
 const createNewsletter=asyncHandler(async(req,res)=>{
 
+
+    const newsletter=await Newsletter.create({
+        title:req.body.title,
+        author:req.body.author,
+        date:req.body.date,
+        imageUrl:req.body.imageUrl,
+        description:req.body.description
+    })
+
+    res.json(newsletter)
+
+
 })
 
 
